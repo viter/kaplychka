@@ -1,0 +1,21 @@
+{
+    "name": "kaplychka",
+    "private": true,
+    "version": "0.0.1",
+    "description": "molytovna kaplytsya online",
+    "dependencies": {
+        "express.io": "",
+        "passport": "",
+        "passport-facebook": "",
+        "passport-local": "",
+        "bcrypt": "",
+        "mysql": "",
+        "jade": ""
+    },
+    "main": "app.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/viter/kaplychka.git"
+    },
+    "author": "Petro Boiko"
+}
