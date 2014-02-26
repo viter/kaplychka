@@ -8,10 +8,10 @@ html
 	body
 		// p #{molytvy[0].tekst}
 		if molytvy[0] != undefined
-			p #{molytvy[0].tekst}
+			p #{molytvy[0].namirennya}
 		script.
 			var io = io.connect();
-			io.emit('ready') 
+			/*io.emit('ready') 
 			io.on('talk', function(data){
 				alert(data.message)
-			});
+			});*/

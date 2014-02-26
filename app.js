@@ -22,13 +22,13 @@ app.use(app.router);
 app.use(express.static(__dirname+'/public'));
 
 app.locals.pretty = true;
-
+/*
 app.io.route('ready', function(req) {
     req.io.emit('talk', {
         message: 'io event from an io route on the server'
     });
 });
-
+*/
 app.get("/", function(req,res){
 	res.render('index',{title:"Капличка",molytvy:molytvy});
 });
