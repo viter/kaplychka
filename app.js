@@ -1,19 +1,32 @@
 var express = require("express.io");
 var app = express();
-var mysql = require("mysql");
+var mongoose = require("mongoose");
 app.http().io();
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  database : 'kaplychka',
-  user     : 'petro',
-  password : 'viter'
-});
+var sendmsg = require('./sendmsg');
 
-var molytvy = {};
+mongoose.connect('mongodb://localhost/kaplychka');
+var db = mongoose.connection;
 
-connection.query("select * from molytvy",function(err,result){
-	molytvy = result;
+db.on('error', console.error.bind(console, 'connection error:'));
+
+	var Molytvy = mongoose.model('Molytvy',mongoose.Schema({
+		tekst: String,
+		namirennya: String,
+		day: String,
+		chas: String,
+		active: Number,
+		userid: Number
+	}),'molytvy');
+
+
+
+var molytvy1 = {};
+
+Molytvy.find(function(err,result){
+	if (err) return console.error(err);
+	molytvy1 = result;
+	console.log(result);
 });
 
 app.set('view engine','jade');
@@ -22,15 +35,15 @@ app.use(app.router);
 app.use(express.static(__dirname+'/public'));
 
 app.locals.pretty = true;
-/*
-app.io.route('ready', function(req) {
-    req.io.emit('talk', {
-        message: 'io event from an io route on the server'
-    });
-});
-*/
+
+sendmsg.sendm(app);
+
 app.get("/", function(req,res){
-	res.render('index',{title:"Капличка",molytvy:molytvy});
+	res.render('index',{title:"Капличка",molytvy:molytvy1});
+});
+
+app.get("/molytva/:id",function(req,res){
+	res.render('molytva',{title:"Молитва",room:req.params.id});
 });
 
 

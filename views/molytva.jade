@@ -1,0 +1,15 @@
+doctype html
+html
+	head
+		title #{title}
+		link(rel='stylesheet', href='/css/main.css')
+		script(src='/js/jquery-1.11.0.min.js')
+		script(src='/socket.io/socket.io.js')
+	body
+		p #{room}
+		script.
+			var io = io.connect();
+			io.emit('ready','room') 
+			io.on('talk', function(data){
+				$('body').append('<p>'+data.message+ new Date().toString()+'</p>')
+			});

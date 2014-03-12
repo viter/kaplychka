@@ -9,7 +9,8 @@
         "passport-facebook": "",
         "passport-local": "",
         "bcrypt": "",
-        "mysql": "",
+        "mongoose": "",
+        "connect-mongo": "",
         "jade": ""
     },
     "main": "app.js",
