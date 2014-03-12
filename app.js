@@ -1,6 +1,7 @@
 var express = require("express.io");
 var app = express();
 var mongoose = require("mongoose");
+var MongoStore = require("connect-mongo")(express);
 app.http().io();
 
 var sendmsg = require('./sendmsg');
@@ -28,7 +29,11 @@ Molytvy.find(function(err,result){
 	molytvy1 = result;
 	console.log(result);
 });
-
+app.use(express.cookieParser());
+app.use(express.session({store: new MongoStore({
+	db:'kaplychka',
+	host:'127.0.0.1'
+}),secret:'viter'}));
 app.set('view engine','jade');
 app.set('views','./views');
 app.use(app.router);
@@ -43,6 +48,7 @@ app.get("/", function(req,res){
 });
 
 app.get("/molytva/:id",function(req,res){
+	req.session.name = req.params.id;
 	res.render('molytva',{title:"Молитва",room:req.params.id});
 });
 
